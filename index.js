@@ -10,7 +10,7 @@ app.use(cors());
 
 // API details
 const apiUrl = "https://roobetconnect.com/affiliate/v2/stats";
-const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE1ZThlYzNmLTkwZDEtNDEzNy1iNGJkLWJhN2M0MjFjMjVlMiIsIm5vbmNlIjoiNDE5MmI1MTctOGMzYy00ZjBjLTg2MzEtYzNiOWEyNGNiZmFjIiwic2VydmljZSI6ImFmZmlsaWF0ZVN0YXRzIiwiaWF0IjoxNzQ3MTg3MTUxfQ.Qr7j1PEqSL5cVb7RuMXXLv1IDv4gvY98pUUU9Ca1pBM";
+const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5ODliMzRhLTdjYmEtNGRlOC1iNzJiLWMzNTdkZDkxMTIxOSIsIm5vbmNlIjoiODZlOWU1NzctZjcwZS00MDhmLWFjNjUtYzAxZDAyODU3NjA4Iiwic2VydmljZSI6ImFmZmlsaWF0ZVN0YXRzIiwiaWF0IjoxNzQ2MDUyMjU1fQ.Bl4tRouCTt1Xizyq6NY3WbXjtAyVnshBP9i8Yr36KS4";
 
 let leaderboardCache = [];
 
@@ -40,7 +40,7 @@ async function fetchLeaderboardData() {
                 Authorization: `Bearer ${apiKey}`,
             },
             params: {
-                userId: "15e8ec3f-90d1-4137-b4bd-ba7c421c25e2",
+                userId: "c989b34a-7cba-4de8-b72b-c357dd911219",
                 startDate,
                 endDate,
             },
@@ -95,7 +95,7 @@ app.listen(PORT, '0.0.0.0', () => {
 
 // Self-ping to stay alive
 setInterval(() => {
-    axios.get("https://azisailbdata.onrender.com/leaderboard/top14")
+    axios.get("https://bluejuuldata.onrender.com/leaderboard/top14")
         .then(() => console.log("Self-ping successful."))
         .catch((err) => console.error("Self-ping failed:", err.message));
 }, 4 * 60 * 1000);
