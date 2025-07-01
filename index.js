@@ -83,6 +83,49 @@ app.get("/leaderboard/top14", (req, res) => {
 
     res.json(top14);
 });
+app.get("/leaderboard/prev", async (req, res) => {
+    try {
+        const now = new Date();
+        const prevMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1));
+        const prevMonthEnd = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 0, 23, 59, 0));
+
+        const startDate = prevMonth.toISOString();
+        const endDate = prevMonthEnd.toISOString();
+
+        const response = await axios.get(apiUrl, {
+            headers: {
+                Authorization: `Bearer ${apiKey}`,
+            },
+            params: {
+                userId: "c989b34a-7cba-4de8-b72b-c357dd911219",
+                startDate,
+                endDate,
+            },
+        });
+
+        const data = response.data;
+
+        const top14 = data
+            .filter((player) => player.username !== "azisai205")
+            .sort((a, b) => b.weightedWagered - a.weightedWagered)
+            .slice(0, 10);
+
+        if (top14.length >= 2) {
+            [top14[0], top14[1]] = [top14[1], top14[0]];
+        }
+
+        const processed = top14.map((player) => ({
+            username: formatUsername(player.username),
+            wagered: Math.round(player.weightedWagered),
+            weightedWager: Math.round(player.weightedWagered),
+        }));
+
+        res.json(processed);
+    } catch (error) {
+        console.error("Error fetching previous leaderboard data:", error.message);
+        res.status(500).json({ error: "Failed to fetch previous leaderboard" });
+    }
+});
 
 // Initial fetch and set interval
 fetchLeaderboardData();
